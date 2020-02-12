@@ -6,37 +6,30 @@
  * @flow
  */
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 
 import { ScrollView, FlatList } from 'react-native';
+import lerFotos from './src/api/feed';
 import { Cabecalho } from './src/Components/Cabecalho';
 import { Foto } from './src/Components/Foto';
 
-const informacoes = [
-  {
-    id: 1,
-    usuario: "Ricardo",
-  },
-  {
-    id: 2,
-    usuario: "Marina",
-  },
-  {
-    id: 3,
-    usuario: "Henrique",
-  },
-];
-
 const App = () => {
+  const [fotos, setFotos] = useState([]);
+
+  useEffect(() => {
+    
+    lerFotos(setFotos);
+  },[]);
+
   return (
     <ScrollView>
       <FlatList
-        data={informacoes}
+        data={fotos}
         keyExtractor={item => item.id.toString()}
         renderItem={({item}) =>
           <Fragment>
-            <Cabecalho nomeUsuario={item.usuario} />
-            <Foto />
+            <Cabecalho nomeUsuario={item.userName} urlImage={item.userURL} />
+            <Foto urlFoto={item.url} descricao={item.description} qntLike={item.likes} />
           </Fragment>
         }
       />
