@@ -1,7 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import {
-  ScrollView,
   FlatList,
+  StatusBar,
+  View,
+  Platform,
 } from "react-native";
 import { Cabecalho } from './src/Components/Cabecalho';
 import { Foto } from './src/Components/Foto';
@@ -14,10 +16,19 @@ const App = () => {
 
   useEffect(() => {
     lerFotos(setFotos);
-  }, [])
+  }, []);
+
+  let altura = 0;
+  if (Platform.OS == "ios") {
+    altura = 35;
+  }
 
   return (
-    <ScrollView>
+    <View style={{ marginTop: altura }}>
+      <StatusBar
+        backgroundColor="white"
+        barStyle="dark-content"
+      />
       <FlatList
         data={fotos}
         keyExtractor={(item) => item.id.toString()}
@@ -34,7 +45,7 @@ const App = () => {
             <Comentarios comentarios={item.comentarios}/>
           </Fragment>}
       />
-    </ScrollView>
+    </View>
   )
 };
 export default App;

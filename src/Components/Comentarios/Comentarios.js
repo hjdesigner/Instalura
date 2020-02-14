@@ -16,7 +16,6 @@ const Comentarios = ({ comentarios }) => {
 
 
     const adicionarComentario = () => {
-        console.warn(conteudoCampoInput);
         campoInput.clear();
         const novoComentario = {
             date: Date.now(),
