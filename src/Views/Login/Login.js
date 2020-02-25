@@ -3,7 +3,8 @@ import {
   Text,
   TextInput,
   Button,
-  View
+  View,
+  Platform
 
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage"
@@ -11,6 +12,7 @@ import estilo from "./estilo"
 import efetuarLogin from '../../api/login';
 
 const Login = ({ navigation }) => {
+
 const [usuario, setUsuario] = useState("");
 const [senha, setSenha] = useState("");
 const [mensagemErro, setMensagemErro] = useState("")
@@ -20,7 +22,7 @@ const [mensagemErro, setMensagemErro] = useState("")
       const token = await efetuarLogin(usuario, senha);
       await AsyncStorage.setItem("instalura_token", token);
       //Ir para tela de Feed
-      navigation.push("Feed")
+      navigation.replace("Feed",{ nome : usuario })
 
     }catch(erro){
       setMensagemErro(erro.message)
@@ -55,4 +57,16 @@ const [mensagemErro, setMensagemErro] = useState("")
 
   )
 };
+
+Login.navigationOptions = () => {
+  const opcoes = {
+    title:"Login"
+  }
+  if(Platform.OS == "android"){
+    opcoes.header = null
+  }
+  
+
+  return opcoes;
+}
 export default Login;

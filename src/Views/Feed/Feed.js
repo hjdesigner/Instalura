@@ -20,9 +20,7 @@ const Feed = () => {
   }, [])
 
   let altura = 0;
-  if(Platform.OS == "ios"){
-    altura = 35;
-  }
+
   return (
     <ScrollView style={{marginTop:altura}}>
       <StatusBar
@@ -53,4 +51,16 @@ const Feed = () => {
 
   )
 };
+
+Feed.navigationOptions = ({ navigation }) => {
+  const opcoes = {
+    title: navigation.getParam("nome")
+  }
+  if(Platform.OS == "android"){
+    opcoes.header = null;
+  }
+  
+
+  return opcoes;
+}
 export default Feed;
